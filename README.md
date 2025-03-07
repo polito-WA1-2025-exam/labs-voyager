@@ -1,12 +1,24 @@
 # Group "GROUP NAME"
 
 ## Members
-- s123456 LASTNAME FIRSTNAME
-- s123456 LASTNAME FIRSTNAME
-- s123456 LASTNAME FIRSTNAME
+- s347908 Borello Valentina
+- s346299 Morea Mattia
 
-# Exercise "NAME OF EXERCISE"
+## Git guide
+### Create new branch from an existing one
+```pwsh
+git checkout -b "new-branch" "existing-branch"
+git push -u origin "new-branch"
+```
+### Create new separate branch
+```pwsh
+git branch "new-branch"
+git push -u origin "new-branch"
+```
+
+# Exercise ```Surplus Food```
 
 # Lab Journal
+## Lab **1**
 
-(you may update this file to keep track of the progress of your group work, throughout the weeks)
+
