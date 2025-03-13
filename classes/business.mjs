@@ -1,41 +1,61 @@
 
 
-export function Business(name, address, phone_number, cuisine_type, food_category){
+export class Business{
 
-    this.name = name;
-    this.address = address;
-    this.phone_number = phone_number;
-    this.cuisine_type = cuisine_type;
-    this.food_category = food_category;
+    constructor(name, address, phone_number, cuisine_type, food_category){
 
-    this.list_bags = [];
+        if (!name || !address || !phone_number) {
+            // cuisine_type and food_category are not mandatory
+            throw new Error("All parameters are required");
+        }
 
-    this.add_bag = (bag) => {
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.cuisine_type = cuisine_type;
+        this.food_category = food_category;
+        this.list_bags = [];
+
+    }
+
+    addBag = (bag) => {
+        if (!bag) throw new Error("Bag is required");
         this.list_bags.push(bag);
+        return this;
     }
 
-    this.retrieve_bags = () => {
-        return this.list_bags;
+    retrieveBags = () => {
+        return [...this.list_bags];
     }
 
-    this.remove_bag = (x) => {
-        this.list_bags = this.list_bags.filter(b => b !== x);
+    removeBag = (bag) => {
+        if (!bag) throw new Error("Bag is required");
+        this.list_bags = this.list_bags.filter(b => b !== bag);
+        return this;
     }
-
 }
 
-export function BusinessContainer(){
 
-    this.list_businesses = [];
+export class BusinessContainer{
 
-    this.add = (b) => {
+    constructor(){
+        this.list_businesses = [];
+    }
+
+    addBusiness = (b) => {
+        if (!b) throw new Error("Business is required");
         this.list_businesses.push(b);
+        return this;
     }
 
-    this.show = () => 
-        [...this.list_businesses].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-    
-    this.delete = (b) => {
-        this.list_businesses = this.list_businesses.filter(x => x !== b)
+    showBusinesses = () => {
+        return [...this.list_businesses].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    }
+
+    deleteBusiness = (b) => {
+        if (!b) throw new Error("Business is required");
+        this.list_businesses = this.list_businesses.filter(x => x !== b);
+        return this;
     }
 }
+

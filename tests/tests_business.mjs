@@ -2,13 +2,14 @@ import { Business, BusinessContainer } from "../classes/business.mjs"
 
 /*TESTING Business, Business Container*/
 
-const bad = new Business("x", "x", 0, "x", "x")
-let bc = new BusinessContainer()
-bc.add(new Business("Vale", "Via", "0000", "None", "Veggy"))
-bc.add(new Business("Mattia", "Via", "0000", "None", "Veggy"))
-bc.add(new Business("Pollo", "Via", "0000", "None", "Veggy"))
-bc.add(bad)
+let bc = new BusinessContainer();
+const burgerKing = new Business("Burger King", "Via X", "333", "fast food", "meat");
+bc.addBusiness(burgerKing).addBusiness(new Business("Eataly", "Via Y", "334", "fast food", "meat"));
+bc.showBusinesses().forEach(b => console.log(b));
+bc.deleteBusiness(burgerKing).showBusinesses().forEach(b => console.log(b));
 
-bc.show().forEach(x => console.log(x))
-bc.delete(bad)
-bc.show().forEach(x => console.log(x))
+try{
+    const bEmpty = new Business();
+} catch (error) {
+    console.log(error.message);
+}

@@ -1,47 +1,89 @@
 import dayjs from "dayjs";
 
-export function FoodItem(name, quantity){
+// TODO
+// - [] constructor
+// - [] container
+// - [] add new object
+// - [] retrieve object based on criteria
+// - [] manipulate object
+// - [] delete object
 
-    this.name = name;
-    this.quantity = quantity;
+
+export class FoodItem{
+
+    constructor(name, quantity){
+
+        if (!name || !quantity){
+            throw new Error("All Food details are required")
+        }
+        this.name = name;
+        this.quantity = quantity;
+    }
 }
 
+class Bag{
 
-export function Bag(bag_type, food_items, size, price, business_from, timestamp_start, timestamp_end){
+    constructor(bag_type, food_items, size, price, business_from, timestamp_start, timestamp_end){
 
-    this.bag_type = bag_type;
-    this.food_items = food_items;
-    this.price = price;
-    this.size = size; // only small/ medium/ large
-    this.business_from = business_from;
-    this.timestamp_start = dayjs(timestamp_start);
-    this.timestamp_end = dayjs(timestamp_end);
-    this.is_available = true;
+        if (!bag_type || !food_items || !size || !price || !business_from || !timestamp_start || !timestamp_end){
+            throw new error("All Bag details are required")
+        }
 
-    this.reserve = () => {
-        this.is_available = false;
-    }
-    this.free = () => {
+        this.bag_type = bag_type;
+        this.food_items = food_items;
+        this.price = price;
+        this.size = size; // only small/ medium/ large
+        this.business_from = business_from;
+        this.timestamp_start = dayjs(timestamp_start);
+        this.timestamp_end = dayjs(timestamp_end);
         this.is_available = true;
+        
     }
-    
+
+    getBusiness = () => this.business_from;
+
+    availableFrom = () => {
+        return this.timestamp_start;
+    }
+
+    availableUntil = () => {
+        return this.timestamp_end;
+    }
+
+    reserve = () => {
+        this.is_available = false;
+        return this;
+    }
+
+    free = () => {
+        this.is_available = true;
+        return this;
+    }    
 }
 
-export function SurpriseBag(){
-    Bag.call(this);
+export class SurpriseBag extends Bag{
+
+    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end) {
+        super("Surprise", food_items, size, price, business_from, timestamp_start, timestamp_end);
+    }
 
 }
 
-SurpriseBag.prototype = Object.create(Bag.prototype)
-SurpriseBag.prototype.constructor = SurpriseBag
+export class RegularBag extends Bag{
 
-export function RegularBag(){
-    Bag.call(this);
+    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end) {
+        super("Regular", food_items, size, price, business_from, timestamp_start, timestamp_end);
+        this.removedItemsCounter = 0;
+    }
 
+    increaseRemovedItemsCounter = () => {
+        this.removedItemsCounter++;
+        return this;
+    }
+
+    getRemovedItemsCounter = () => this.removedItemsCounter;
+
+    getFoodItems = () => this.food_items;
+
+    setFoodItems = (food_items) => this.food_items = food_items;
 }
-
-RegularBag.prototype = Object.create(Bag.prototype)
-RegularBag.prototype.constructor = RegularBag
-
-
-
