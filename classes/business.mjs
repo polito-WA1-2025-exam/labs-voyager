@@ -32,11 +32,9 @@ export function BusinessContainer(){
         this.list_businesses.push(b);
     }
 
-    this.show = () => {
-        // TODO: simplify it
-        return this.list_businesses.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-    }
-
+    this.show = () => 
+        [...this.list_businesses].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+    
     this.delete = (b) => {
         this.list_businesses = this.list_businesses.filter(x => x !== b)
     }
