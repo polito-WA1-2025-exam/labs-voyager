@@ -17,6 +17,7 @@ export function Bag(bag_type, food_items, size, price, business_from, timestamp_
     this.timestamp_start = dayjs(timestamp_start);
     this.timestamp_end = dayjs(timestamp_end);
     this.is_available = true;
+    this.removedItemsCounter = 0;
 
     this.reserve = () => {
         this.is_available = false;
@@ -25,6 +26,8 @@ export function Bag(bag_type, food_items, size, price, business_from, timestamp_
         this.is_available = true;
     }
     
+    this.showItems = () => [...food_items];
+
 }
 
 export function SurpriseBag(){

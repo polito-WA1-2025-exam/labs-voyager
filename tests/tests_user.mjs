@@ -28,3 +28,4 @@ user1.shopping_cart.removeItem(fi2, rb2);
 console.log(`Removed ${rb2.removedItemsCounter} items from bag ${rb2.bag_type}.`);
 user1.shopping_cart.list_bags.forEach(b => console.log(b.food_items));
 user1.removeItem(fi3, rb2);
+user1.shopping_cart.list_bags.forEach(b => console.log(b.food_items));
