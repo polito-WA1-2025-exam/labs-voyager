@@ -16,6 +16,19 @@ git branch "new-branch"
 git push -u origin "new-branch"
 ```
 
+### Push one file from one branch to another
+```pwsh
+git checkout target-branch
+git checkout source-branch -- path-to-file
+git add .
+```
+#### Example: Pushing README from lab-1-vale to lab-1
+```pwsh
+git checkout lab-1
+git checkout lab-1-vale -- ./README.md
+git add .
+```
+
 # Exercise ```Surplus Food```
 
 # Lab Journal

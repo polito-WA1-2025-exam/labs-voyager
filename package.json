@@ -1,0 +1,25 @@
+{
+  "name": "labs-voyager",
+  "version": "1.0.0",
+  "description": "## Members - s123456 LASTNAME FIRSTNAME - s123456 LASTNAME FIRSTNAME - s123456 LASTNAME FIRSTNAME",
+  "main": "main.mjs",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polito-WA1-2025-exam/labs-voyager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/polito-WA1-2025-exam/labs-voyager/issues"
+  },
+  "homepage": "https://github.com/polito-WA1-2025-exam/labs-voyager#readme",
+  "dependencies": {
+    "dayjs": "^1.11.13"
+  }
+}
