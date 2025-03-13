@@ -1,51 +1,60 @@
 import dayjs from "dayjs";
 
+/* Warning */
+/* Removed Session class to keep it simple: User has a status attribute to understand if they are logged in or not */
 
-export function User(username, password){
+export class ShoppingCart{
 
-    this.username = username;
-    this.password = password;
+    constructor(){
 
-    this.shopping_cart = new ShoppingCart();
-}
-
-export function Session(user){
-
-    this.user = user;
-    this.status = true;
-
-    this.terminate = () => {
-        this.status = false;
-    }
-}
-
-export function SessionContainer(){
-
-    this.sessions = [];
-
-    this.add = (s) => {
-        this.sessions.push(s);
+        this.list_bags = [];
+        this.textBox = "";
     }
 
-    this.show_active = () => {
-
-        return this.sessions.filter(s => s.status);
-    }
-}
-
-export function ShoppingCart(){
-
-    this.list_bags = [];
-    this.text_box = "";
-
-    this.add_bag = (bag) => {
+    addBag = (bag) => {
+        if (!bag) throw new Error("Bag is required");
 
         const now = dayjs();
-        if (bag.timestamp_start.isAfter(now)){
-            this.list_bags.add(bag);
+        const bagFrom = bag.availableFrom();
+        
+        if (bagFrom.isAfter(now)){
+            this.list_bags.push(bag);
+            console.log("Successfully added bag.");
         } else {
             console.warn("Pick-up time after current time only.");
         }
+
+        return this;
+    }
+}
+
+
+export class User{
+
+    constructor(username, password){
+
+        if (!username || !password) {
+            throw new Error("Username and password are required");
+        }
+
+        this.username = username;
+        this.password = password;
+
+        this.status = false; // Convention: false = log out
+        this.shoppingCart = new ShoppingCart();
     }
 
+    logIn = () => {
+        this.status = true;
+        return this;
+    }
+
+    logOut = () => {
+        this.status = false;
+        return this;
+    }
+
+    showStatus = () => {
+        return this.status;
+    }
 }
