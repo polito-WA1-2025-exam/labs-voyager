@@ -37,6 +37,7 @@ class Bag{
         this.timestamp_start = dayjs(timestamp_start);
         this.timestamp_end = dayjs(timestamp_end);
         this.is_available = true;
+        
     }
 
     availableFrom = () => {
@@ -55,7 +56,7 @@ class Bag{
     free = () => {
         this.is_available = true;
         return this;
-    }
+    }    
 }
 
 export class SurpriseBag extends Bag{
@@ -70,5 +71,17 @@ export class RegularBag extends Bag{
 
     constructor(food_items, size, price, business_from, timestamp_start, timestamp_end) {
         super("Regular", food_items, size, price, business_from, timestamp_start, timestamp_end);
+        this.removedItemsCounter = 0;
     }
+
+    increaseRemovedItemsCounter = () => {
+        this.removedItemsCounter++;
+        return this;
+    }
+
+    getRemovedItemsCounter = () => this.removedItemsCounter;
+
+    getFoodItems = () => this.food_items;
+
+    setFoodItems = (food_items) => this.food_items = food_items;
 }

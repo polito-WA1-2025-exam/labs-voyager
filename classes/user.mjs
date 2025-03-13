@@ -26,6 +26,22 @@ export class ShoppingCart{
 
         return this;
     }
+
+    showBags = () => [...this.list_bags];
+
+    removeItem = (item, bag) => {
+        if (bag.bag_type === "Regular") {
+            if (bag.getRemovedItemsCounter() < 2) {
+                bag.setFoodItems( bag.getFoodItems().filter(i => i !== item) );
+                bag.increaseRemovedItemsCounter();
+            } else {
+                console.warn('[WARN]: Already remove max number (2) of items.');
+            }
+        } else {
+            console.warn("[WARN]: It is not allowed to remove item from Surprise bags.")
+        }
+        return this;
+    }
 }
 
 
@@ -57,4 +73,6 @@ export class User{
     showStatus = () => {
         return this.status;
     }
+
+    retrieveCart = () => this.shoppingCart;
 }
