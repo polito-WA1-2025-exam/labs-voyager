@@ -22,8 +22,9 @@ const rb1 = new Bag("Regular", [fi1, fi2, fi3], "medium", 12, "store", dayjs("20
 const rb2 = new Bag("Regular", [fi1, fi2, fi3, fi4, fi5], "large", 12, "store", dayjs("2025-03-31"), dayjs("2025-04-01"));
 
 user1.addBag(rb2);
-console.log(user1);
+user1.shopping_cart.list_bags.forEach(b => console.log(b.showItems()));
 user1.removeItem(fi1, rb2);
 user1.removeItem(fi2, rb2);
-console.log(user1);
+console.log(rb2.removedItemsCounter);
+user1.shopping_cart.list_bags.forEach(b => console.log(b.showItems()));
 user1.removeItem(fi3, rb2);
