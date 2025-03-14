@@ -5,8 +5,9 @@ import dayjs from "dayjs";
 
 export class ShoppingCart{
 
-    constructor(){
+    constructor(id = undefined){
 
+        this.id = id;
         this.list_bags = [];
         this.textBox = "";
     }
@@ -64,12 +65,13 @@ export class ShoppingCart{
 
 export class User{
 
-    constructor(username, password){
+    constructor(username, password, id = undefined){
 
         if (!username || !password) {
             throw new Error("Username and password are required");
         }
 
+        this.id = id;
         this.username = username;
         this.password = password;
 

@@ -2,13 +2,14 @@
 
 export class Business{
 
-    constructor(name, address, phone_number, cuisine_type, food_category){
+    constructor(name, address, phone_number, cuisine_type, food_category, id = undefined){
 
         if (!name || !address || !phone_number) {
             // cuisine_type and food_category are not mandatory
             throw new Error("All parameters are required");
         }
-
+        
+        this.id = id;
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;

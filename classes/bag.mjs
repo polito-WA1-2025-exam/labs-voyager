@@ -23,12 +23,13 @@ export class FoodItem{
 
 class Bag{
 
-    constructor(bag_type, food_items, size, price, business_from, timestamp_start, timestamp_end){
+    constructor(bag_type, food_items, size, price, business_from, timestamp_start, timestamp_end, id = undefined){
 
         if (!bag_type || !food_items || !size || !price || !business_from || !timestamp_start || !timestamp_end){
             throw new error("All Bag details are required")
         }
 
+        this.id = id;
         this.bag_type = bag_type;
         this.food_items = food_items;
         this.price = price;
@@ -63,16 +64,16 @@ class Bag{
 
 export class SurpriseBag extends Bag{
 
-    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end) {
-        super("Surprise", food_items, size, price, business_from, timestamp_start, timestamp_end);
+    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end, id = undefined) {
+        super("Surprise", food_items, size, price, business_from, timestamp_start, timestamp_end, id);
     }
 
 }
 
 export class RegularBag extends Bag{
 
-    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end) {
-        super("Regular", food_items, size, price, business_from, timestamp_start, timestamp_end);
+    constructor(food_items, size, price, business_from, timestamp_start, timestamp_end, id = undefined) {
+        super("Regular", food_items, size, price, business_from, timestamp_start, timestamp_end, id);
         this.removedItemsCounter = 0;
     }
 
