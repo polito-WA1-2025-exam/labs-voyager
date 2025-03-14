@@ -11,8 +11,25 @@ export class ShoppingCart{
         this.textBox = "";
     }
 
+    validateBag = (bag) => {
+
+        const involved_businesses = this.list_bags.map(b => b.getBusiness());
+
+        if (involved_businesses.indexOf(bag.getBusiness()) > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     addBag = (bag) => {
         if (!bag) throw new Error("Bag is required");
+
+        if (!this.validateBag(bag)) {
+
+            console.warn("[Warn] You can pick only one bag per business.");
+            return this;
+        }
 
         const now = dayjs();
         const bagFrom = bag.availableFrom();
@@ -24,6 +41,22 @@ export class ShoppingCart{
             console.warn("Pick-up time after current time only.");
         }
 
+        return this;
+    }
+
+    showBags = () => [...this.list_bags];
+
+    removeItem = (item, bag) => {
+        if (bag.bag_type === "Regular") {
+            if (bag.getRemovedItemsCounter() < 2) {
+                bag.setFoodItems( bag.getFoodItems().filter(i => i !== item) );
+                bag.increaseRemovedItemsCounter();
+            } else {
+                console.warn('[WARN]: Already remove max number (2) of items.');
+            }
+        } else {
+            console.warn("[WARN]: It is not allowed to remove item from Surprise bags.")
+        }
         return this;
     }
 }
@@ -57,4 +90,6 @@ export class User{
     showStatus = () => {
         return this.status;
     }
+
+    retrieveCart = () => this.shoppingCart;
 }
