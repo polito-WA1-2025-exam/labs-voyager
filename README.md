@@ -34,4 +34,11 @@ git add .
 # Lab Journal
 ## Lab **1**
 
-
+## Lab 2
+### bag(<u>id</u>, bag_type, size, price, business_from, timestamp_start, timestamp_end, removedItemsCounter*)
+business_from: foreign key of table business
+### fooditem(<u>id</u>, name, quantity, bag)
+food-item one-to-many relation with bag;     
+bag: foreign key from bag table
+### user(<u>id</u>, username, password, status)  
+### business(<u>id</u>, name, address, phone_number, cuisine_type*, food_category*)  

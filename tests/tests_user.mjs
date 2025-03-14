@@ -35,3 +35,5 @@ user1.retrieveCart().showBags().forEach(b => console.log(b.food_items));
 
 user1.retrieveCart().addBag(sb1);
 user1.retrieveCart().removeItem(fi1, sb1);
+
+// LAB 2
