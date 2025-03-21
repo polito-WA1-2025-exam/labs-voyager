@@ -11,13 +11,14 @@ import dayjs from "dayjs";
 
 export class FoodItem{
 
-    constructor(name, quantity){
+    constructor(name, quantity, id=undefined){
 
         if (!name || !quantity){
             throw new Error("All Food details are required")
         }
         this.name = name;
         this.quantity = quantity;
+        this.id = id;
     }
 }
 
