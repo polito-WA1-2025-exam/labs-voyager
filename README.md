@@ -51,77 +51,30 @@ bag: foreign key from bag table
     [Sample response, with body (if any)] 
     [Error response(s), if any]
 ```
-### Starting from Businesses
-#### show all businesses
-```txt
-GET /home/businesses
-    retrieves a list of all the businesses in alphabetic order
+### Endpoints 
+```
+GET /                                           # entry point
+GET /home                                       # home page
+GET /home/businesses                            # show all businesses
+GET /home/businesses/:buId/business             # show a particular business
+PUT /home/businesses/:buId/business             # modify a particular business
+GET /home/businesses/:buId/bags                 # show all the available bags of a particular business
+GET /home/businesses/:buId/bags/:bagId/bag      # show details of a particular bag of a particular business
+PUT /home/businesses/:buId/bags/:bagId/bag      # modify a particular bag of a particular business
+GET /home/bags                                  # show all the available bags
+GET /home/bags/:bagId/bag                       # show details of a particular bag
+PUT /home/bags/:bagId/bag                       # show details of a particular bag
 
+TODO:
+- create a business
+- create a bag
+- delete a business
+- delete a bag
+- remove a food item from a bag
+TODO User management:
+? Do I have a relationship between the booker (user) and the bag?
+- manage user page
+- reserve a bag / manage shopping cart: add a bag
+- free a bag / manage shopping cart: free a bag
+- manage shopping cart: confirm cart
 ```
-#### delete a business and redirects to /home/businesses (eligibility granted to the app administrator)
-```txt
-
-```
-#### show all the available bags for a particular business
-```txt
-GET /home/businesses/business-:bID/bags
-    
-```
-#### show the detail of a particuar bag of a particular business
-```txt
-GET /home/businesses/business-:bID/bags/bag-:bagID
-    distinguish between Surprise and Regular bags     
-```
-#### reserve the bag (eligibility granted to the user)
-```txt
-PUT /home/businesses/business-:bID/bags/bag-:bagID
-    reserve a bag
-    Exception: reserve only bags with future pick-up time 
-```
-#### add a new bag (eligibility granted to the business)
-```txt
-POST /home/businesses/business-:bID/bags/new-bag
-    
-```
-#### delete a bag and redirect to /home/businesses/business-:bID/bags (eligibility granted to the business)
-```txt
-
-```
-### Starting from Bags
-#### show all bags
-```txt
-GET /home/bags/
-    
-```
-#### show the detail of a particular bag
-```txt
-GET /home/bags/bag-:bagID
-    distinguish between Surprise and Regular bags     
-```
-#### redirect to the business owning the bag
-```txt
-
-```
-#### reserve a bag (eligibility granted to the user)
-```txt
-PUT /home/bags/bag-:bagID
-    reserve a bag
-    Exception: reserve only bags with future pick-up time 
-```
-#### remove a food item from the bag
-In case the bag is restored (available again) the food items must be added 
-```txt
-PUT /home/bags/bag-:bagID
-    Exception: only in case of Regular bags and max 2 attemps 
-```
-#### free a bag
-```txt
-PUT /home/bags/bag-:bagID
-```
-### User and shopping cart
-#### personal area
-#### personal shopping cart
-? Do I have a relationship between the booker and the bag?
-#### personal shopping cart --> add a bag
-#### personal shopping cart --> confirm
-#### personal shopping cart --> free a bag
