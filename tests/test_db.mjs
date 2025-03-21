@@ -4,7 +4,7 @@ import { Business } from "../classes/business.mjs";
 import { RegularBag } from "../classes/bag.mjs";
 import dayjs from "dayjs";
 
-const db = new sqlite.Database('./db.sqlite', (err) => {if (err) throw err});
+const db = new sqlite.Database('../database/db.sqlite', (err) => {if (err) throw err});
 
 const b1 = new Business("Burger King", "Via X", "333", "fast food", "meat");
 
