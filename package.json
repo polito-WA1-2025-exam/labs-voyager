@@ -21,6 +21,10 @@
   "homepage": "https://github.com/polito-WA1-2025-exam/labs-voyager#readme",
   "dependencies": {
     "dayjs": "^1.11.13",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
     "sqlite3": "^5.1.7"
   }
 }
