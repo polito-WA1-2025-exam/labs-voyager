@@ -35,7 +35,7 @@ git add .
 ## Lab **1**
 
 ## Lab 2
-### bag(<u>id</u>, bag_type, size, price, business_from, timestamp_start, timestamp_end, removedItemsCounter*)
+### bag(<u>id</u>, bag_type, size, price, business_from, timestamp_start, timestamp_end, removedItemsCounter*, isAvailable)
 business_from: foreign key of table business
 ### fooditem(<u>id</u>, name, quantity, bag)
 food-item one-to-many relation with bag;     

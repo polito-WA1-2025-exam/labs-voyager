@@ -41,6 +41,7 @@ function bagTable() {
         timestampStart TEXT NOT NULL,
         timestampEnd TEXT NOT NULL,
         removedItemsCounter INTEGER,
+        isAvailable INTEGER NOT NULL,
         FOREIGN KEY(businessFrom) REFERENCES business(id))`;
 
         return runQuery(sql, "Bag Table created.");

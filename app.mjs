@@ -10,14 +10,38 @@ import {User} from "./classes/user.mjs";
 const db_name = "database/db2.sqlite";
 const db = new sqlite.Database(db_name, (err) => { if (err) throw err; });
 
-const app = express()
+const app = express();
 
 // Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
 
-// DB Functions 
+function HideSurpriseBagItemsMiddleware(req, res, next){
 
+    const originalJson = res.json;
+
+    res.json = function(body){
+
+        if (body && Array.isArray(body)){
+
+            body = body.map(item => {
+
+                item["food_items"] = item["bag_type"] === "Surprise" ? [] : item["food_items"];
+                return item;
+            })
+
+        } else {
+            console.log('Response body not valid for modification, passing to next middleware');
+            return next();
+        }
+
+        originalJson.call(this, body);
+    }
+
+    next();
+}
+
+// Database Queries Management 
 const runQuery = (query, params = []) => {
     return new Promise((resolve, reject) => {
         db.all(query, params, (err, rows) => {
@@ -34,6 +58,18 @@ const selectAll = (table) => {
 const conditionedSelectAll = (table, attr, value) => {
     return runQuery(`SELECT * FROM ${table} WHERE ${attr} = ?`, [value]);
 };
+
+// Bag Management 
+async function mapBags(row) {
+    let foods = await conditionedSelectAll("fooditem", "bagId", row.id);
+    foods = foods.map(f => new FoodItem(f.name, f.quantity, f.id));
+
+    const bag = row.bagType === "Regular"
+        ? new RegularBag(foods, row.size, row.price, row.businessFrom, row.timestampStart, row.timestampEnd, row.removedItemsCounter, row.id)
+        : new SurpriseBag(foods, row.size, row.price, row.businessFrom, row.timestampStart, row.timestampEnd, row.id);
+
+    return bag;
+}
 
 
 // Endpoints
@@ -68,23 +104,33 @@ app.get(allBusinesses, async (req, res) => {
 
 });
 
-async function mapBags(row) {
-    let foods = await conditionedSelectAll("fooditem", "bagId", row.id);
-    foods = foods.map(f => new FoodItem(f.name, f.quantity, f.id));
-
-    const bag = row.bagType === "Regular"
-        ? new RegularBag(foods, row.size, row.price, row.businessFrom, row.timestampStart, row.timestampEnd, row.removedItemsCounter, row.id)
-        : new SurpriseBag(foods, row.size, row.price, row.businessFrom, row.timestampStart, row.timestampEnd, row.id);
-
-    return bag;
-}
-
-
-// Bags Endpoint
-app.get(allAvailableBags, async (req, res) => {
+app.get(allBagsPerBusiness, HideSurpriseBagItemsMiddleware, async (req, res) => {
 
     try {
-        let rows = await selectAll("bag");
+        const buId = req.params.buId;
+
+        if (!buId || buId.trim() === "") throw new Error("buId is not defined");
+
+        let rows = await runQuery(`SELECT * FROM bag WHERE businessFrom = ? and isAvailable = ?`, [buId, 1]);
+        if (rows.length === 0) {
+            res.status(400).json({message: `Business ${buId} not found.`});
+        } else {
+            let objects = await Promise.all(rows.map(row => mapBags(row)));
+            res.json(objects);
+        }
+        
+    } catch (error){
+        console.log(error);
+        res.status(500).json({ message: 'Error fetching bags : '+error.message });
+    }
+    
+});
+
+// Bags Endpoint
+app.get(allAvailableBags, HideSurpriseBagItemsMiddleware, async (req, res) => {
+
+    try {
+        let rows = await conditionedSelectAll("bag", "isAvailable", 1);
         let objects = await Promise.all(rows.map(row => mapBags(row)));
 
         res.json(objects)

@@ -45,12 +45,16 @@ function addUser(username, password){
     });
 }
 
-const promiseBag = (b) => new Promise((resolve, reject) => {
-    const sqlBag = 'INSERT INTO bag(bagType, size, price, businessFrom, timestampStart, timestampEnd, removedItemsCounter) VALUES (?, ?, ?, ?, ?, ?, ?)';
+const promiseBag = (b, notAvailable=false) => new Promise((resolve, reject) => {
+    const sqlBag = 'INSERT INTO bag(bagType, size, price, businessFrom, timestampStart, timestampEnd, removedItemsCounter, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     // TODO: fix timestampStart, timestampEnd parameters to correctly insert the dates
+
+    if (notAvailable){
+        b.is_available=0;
+    }
     
     const counter = undefined || b.removedItemsCounter;
-    let inputs = [b.bag_type, b.size, b.price, b.business_from.id, b.timestamp_start.toString(), b.timestamp_end.toString(), counter];
+    let inputs = [b.bag_type, b.size, b.price, b.business_from.id, b.timestamp_start.toString(), b.timestamp_end.toString(), counter, b.is_available];
 
     db.run(sqlBag, inputs, function(err){
 
@@ -79,14 +83,14 @@ const promiseFood = (f, b) => new Promise((resolve, reject) => {
     
 
 
-async function addBag(constructor, food_items, size, price, business_from, timestamp_start, timestamp_end) {
+async function addBag(constructor, food_items, size, price, business_from, timestamp_start, timestamp_end, notAvailable=false) {
 
     try {
         let newBag = new constructor(
             food_items, size, price, business_from, timestamp_start, timestamp_end
         ) 
 
-        newBag = await promiseBag(newBag);
+        newBag = await promiseBag(newBag, notAvailable=notAvailable);
         console.log("Add new bag -> id:"+newBag.id);
 
         for (const item of food_items){
@@ -137,7 +141,7 @@ async function main() {
         const potatos1 = new FoodItem("French fries", 3);
 
         const bag1 = await addBag(
-            RegularBag, [poke, salmon, bao], "large", 15.90, bu1, "2025-03-31", "2025-04-01"
+            RegularBag, [poke, salmon, bao], "large", 15.90, bu1, "2025-03-31", "2025-04-01", true
         );
         console.log("==> Add new bag -> id:"+bag1.id);
         const bag2 = await addBag(

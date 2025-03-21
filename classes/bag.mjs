@@ -38,7 +38,7 @@ class Bag{
         this.business_from = business_from;
         this.timestamp_start = dayjs(timestamp_start);
         this.timestamp_end = dayjs(timestamp_end);
-        this.is_available = true;
+        this.is_available = 1; // 1 = True and 0 = False
         
     }
 
