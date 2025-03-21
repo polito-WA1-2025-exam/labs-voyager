@@ -1,0 +1,14 @@
+
+GET http://localhost:3000/
+
+### 
+
+GET http://localhost:3000/home
+
+###
+
+GET http://localhost:3000/home/businesses
+
+###
+
+GET http://localhost:3000/home/bags
