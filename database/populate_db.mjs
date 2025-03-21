@@ -1,11 +1,11 @@
 import sqlite from "sqlite3";
 import dayjs from "dayjs";
 
-import { Business } from "./classes/business.mjs";
-import { RegularBag, SurpriseBag, FoodItem } from "./classes/bag.mjs";
-import { User } from "./classes/user.mjs";
+import { Business } from "../classes/business.mjs";
+import { RegularBag, SurpriseBag, FoodItem } from "../classes/bag.mjs";
+import { User } from "../classes/user.mjs";
 
-const db_name = "./db2.sqlite";
+const db_name = "database/db2.sqlite";
 const db = new sqlite.Database(db_name, (err) => { if (err) throw err; });
 
 function addBusiness(name, address, phone_number, cuisine_type, food_category) {
@@ -45,12 +45,16 @@ function addUser(username, password){
     });
 }
 
-const promiseBag = (b) => new Promise((resolve, reject) => {
-    const sqlBag = 'INSERT INTO bag(bagType, size, price, businessFrom, timestampStart, timestampEnd, removedItemsCounter) VALUES (?, ?, ?, ?, ?, ?, ?)';
+const promiseBag = (b, notAvailable=false) => new Promise((resolve, reject) => {
+    const sqlBag = 'INSERT INTO bag(bagType, size, price, businessFrom, timestampStart, timestampEnd, removedItemsCounter, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     // TODO: fix timestampStart, timestampEnd parameters to correctly insert the dates
+
+    if (notAvailable){
+        b.is_available=0;
+    }
     
     const counter = undefined || b.removedItemsCounter;
-    let inputs = [b.bag_type, b.size, b.price, b.business_from.id, b.timestamp_start, b.timestamp_end, counter];
+    let inputs = [b.bag_type, b.size, b.price, b.business_from.id, b.timestamp_start.toString(), b.timestamp_end.toString(), counter, b.is_available];
 
     db.run(sqlBag, inputs, function(err){
 
@@ -79,14 +83,14 @@ const promiseFood = (f, b) => new Promise((resolve, reject) => {
     
 
 
-async function addBag(constructor, food_items, size, price, business_from, timestamp_start, timestamp_end) {
+async function addBag(constructor, food_items, size, price, business_from, timestamp_start, timestamp_end, notAvailable=false) {
 
     try {
         let newBag = new constructor(
             food_items, size, price, business_from, timestamp_start, timestamp_end
         ) 
 
-        newBag = await promiseBag(newBag);
+        newBag = await promiseBag(newBag, notAvailable=notAvailable);
         console.log("Add new bag -> id:"+newBag.id);
 
         for (const item of food_items){
@@ -112,23 +116,47 @@ async function main() {
         const bu1 = await addBusiness("Burger King", "Via X", "333", "fast food", "meat");
         console.log("==> Add new business -> id:", bu1.id);
 
+        const bu2 = await addBusiness("Flower Burger", "Via Y", "334", "veggy", "vegetables");
+        console.log("==> Add new business -> id:", bu2.id);
+
+        const bu3 = await addBusiness("Carrot Maison", "Via Y", "335", "veggy", "vegetables");
+        console.log("==> Add new business -> id:", bu3.id);
+
         const u1 = await addUser("pippo", "012345");
         console.log("==> Add new user -> id:"+u1.id);
+
+        const u2 = await addUser("marko", "012345");
+        console.log("==> Add new user -> id:"+u2.id);
+
+        const u3 = await addUser("cleo97", "012345");
+        console.log("==> Add new user -> id:"+u3.id);
 
         const poke = new FoodItem("Poké", 1);
         const salmon = new FoodItem("Salmon Nigiri", 5);
         const bao = new FoodItem("Bao", 3);
         const salmon2 = new FoodItem("Salmon Nigiri", 5);
         const bao2 = new FoodItem("Bao", 3);
+        const veggyB1 = new FoodItem("Veggy burger with onions", 3);
+        const veggyB2 = new FoodItem("Veggy burger with fake cheese", 3);
+        const potatos1 = new FoodItem("French fries", 3);
 
         const bag1 = await addBag(
-            RegularBag, [poke, salmon, bao], "large", 15.90, bu1, "2025-03-31", "2025-04-01"
+            RegularBag, [poke, salmon, bao], "large", 15.90, bu1, "2025-03-31", "2025-04-01", true
         );
         console.log("==> Add new bag -> id:"+bag1.id);
         const bag2 = await addBag(
             SurpriseBag, [salmon2, bao2], "large", 15.90, bu1, "2025-03-31", "2025-04-01"
         );
         console.log("==> Add new bag -> id:"+bag2.id);
+        const bag3 = await addBag(
+            RegularBag, [veggyB1], "small", 10.00, bu2, "2025-04-30", "2025-05-01"
+        )
+        console.log("==> Add new bag -> id:"+bag3.id);
+        const bag4 = await addBag(
+            SurpriseBag, [veggyB2, potatos1], "medium", 15.00, bu3, "2025-04-30", "2025-05-01"
+        )
+        console.log("==> Add new bag -> id:"+bag4.id);
+
 
     } catch (err) {
         console.log(err);
