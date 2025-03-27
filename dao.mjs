@@ -3,7 +3,7 @@ import sqlite from 'sqlite3';
 import {Business} from './classes/business.mjs'
 import {SurpriseBag, RegularBag} from './classes/bag.mjs'
 
-const db = new sqlite.Database('db2.sqlite', (err) => {if (err) throw err});
+const db = new sqlite.Database('./database/db2.sqlite', (err) => {if (err) throw err});
 
 export const getBusinesses = () => {
     return new Promise((resolve, reject) => {
