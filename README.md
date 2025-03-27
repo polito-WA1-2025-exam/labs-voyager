@@ -274,3 +274,51 @@ TODO User management:
 - reserve a bag / manage shopping cart: add a bag
 - free a bag / manage shopping cart: free a bag
 - manage shopping cart: confirm cart
+
+## Lab 4
+### Template page 
+#### Header
+#### Navigation bar
+- home shortcut through application icon
+- login link
+- shopping cart link
+#### Sidebar (on the right - depends on the page)
+- filters
+#### Footer 
+- home shortcut through application icon
+- copyright 
+### Home: index.html
+- visualize a list of all businesses (starting from tabular form)
+- businesses must be visualized in alphabetic order w.r.t. name
+- for each business we must visualize name, address, phone_number, cuisine_type, food_category, (type of store)
+- sidebar
+  - filter by availability of bags
+  - filter by cuisine type
+  - filter by food category
+  - filter by type of business
+
+### Visualize bags per business: business.html
+- visualize the list of all bags (starting from tabular form)
+- for each bag we must visualize bag_type, food_items, size, price, timestamp_start, timestamp_end
+- you cannot visualize the food items for the surprise bag
+- you can select only one bag per business
+- select quantity button + & -
+- select size menu
+- select pick-up time
+- reserve button
+- error-message pop-up
+- sidebar
+  - filter by availability of bags
+  - order by pick-up time
+  - order by price 
+
+### Login page: login.html
+- form to insert username and password 
+- user authentication
+
+### Shopping cart page: cart.html
+- visualize the bags reserved by the user
+- in case of a regular bag, user can remove up to 2 food items leaving the price unchanged
+- in case of regular bags, user can visualize the food items
+- user can release the bag
+- user can confim the order
