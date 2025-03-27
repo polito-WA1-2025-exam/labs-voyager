@@ -37,13 +37,23 @@ app.post('/api/businesses', async (req, res) => {
         } else {
             res.status(200).end();
         }
-    } catch(err){
-        console.log(err.message);
-        res.status(500).end()
+    } catch {
+        res.status(500).end();
     }
 });
 
-app.put('/api/businesses/:buId', (req, res) => {});
+app.put('/api/businesses/:buId', async (req, res) => {
+    try{
+        const updatedBuId = await putBusiness(req.params.buId, req.body);
+        if (updatedBuId.error) {
+            res.status(404).end();
+        } else {
+            res.status(200).end();
+        }
+    } catch {
+        res.status(500).end();
+    }
+});
 
 app.get('/api/bags', async (req, res) => {
     getBags()
@@ -89,8 +99,7 @@ app.get('/api/bags/:bagId/fooditems', async (req, res) => {
         } else {
             res.json(foodItems);
         }
-    } catch (err) {
-        console.log(err.message);
+    } catch {
         res.status(500).end();
     }
 })

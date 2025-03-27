@@ -17,7 +17,33 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/api/businesses/2
+GET http://localhost:3000/api/businesses/
+
+###
+
+PUT http://localhost:3000/api/businesses/1
+Content-Type: application/json
+
+{
+    "name": "Flower Burgers",
+    "address": "via Po 15",
+    "phoneNumber": 333,
+    "cuisineType": "vegan",
+    "foodCategory": null
+}
+
+###
+
+PUT http://localhost:3000/api/businesses/99
+Content-Type: application/json
+
+{
+    "name": "Flower Burgers",
+    "address": "via Po 15",
+    "phoneNumber": 333,
+    "cuisineType": "vegan",
+    "foodCategory": null
+}
 
 ###
 

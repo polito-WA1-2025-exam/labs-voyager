@@ -57,9 +57,45 @@ export const postBusiness = (json) => {
     })
 }
 
-export const putBusiness = (buId, json) => {
-    
+export const findRecord = (id, table) => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * from ${table} WHERE id=?`;
+        if (id == undefined)
+            reject({error: "id is undefined"});
+        db.get(query, [id], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(row !== undefined);
+            }
+        });
+    })
 }
+
+export const putBusiness = (buId, json) => {
+
+    return new Promise( async (resolve, reject) => {
+
+        const query = "UPDATE business SET name=?, address=?, phoneNumber=?, cuisineType=?, foodCategory=? WHERE business.id=?";
+        if (json == undefined)
+            reject({error: "Put request body is missing"});
+        if (await findRecord(buId, "business") == false)
+            reject({error: "Business not present, check inserted id."})
+        
+        db.run(query, [json.name, json.address, json.phoneNumber, json.cuisineType, json.foodCategory, buId], function(err){
+            if (err)
+                reject(err)
+            else {
+                const newId = this.lastID;
+                if (newId == undefined)
+                    reject({error: "Fail to update business"});
+                else
+                    resolve(newId);
+            }
+        })
+    })
+}
+
 export const deleteBusiness = () => {}
 
 export const getBags = () => {
