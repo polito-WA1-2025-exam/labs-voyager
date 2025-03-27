@@ -67,4 +67,6 @@ app.get('/api/bags/:bagId', async (req, res) => {
 app.post('/api/bags', (req, res) => {});
 app.put('/api/bags/:bagId', (req, res) => {});
 
+// TODO: add APIs for foodItem
+
 app.listen(3000, () => console.log('Server ready at port 3000'));

@@ -55,6 +55,9 @@ export const getBags = () => {
                         bags.push(sb);
                     } else {
                         const rb = new RegularBag([], r.size, r.price, r.businessFrom, r.timestampStart, r.timestampEnd);
+                        // TODO:
+                        // retreive food items from db
+                        // append food items to regular bag
                         bags.push(rb);
                     }
                 }
@@ -114,3 +117,5 @@ export const getBagsOfBusiness = (businessId) => {
 
 export const postBag = () => {}
 export const putBag = () => {}
+
+// TODO: add CRUD for foodItem
