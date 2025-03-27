@@ -59,4 +59,28 @@ GET http://localhost:3000/api/businesses/1/bags
 
 ###
 
+POST http://localhost:3000/api/businesses/1/bags
+Content-Type: application/json
+
+{
+    "bagType": "Surprise",
+    "foodItems": [
+        {
+            "name": "pizza",
+            "quantity": 4
+        },
+        {
+            "name": "farinata",
+            "quantity": 2
+        }
+    ],
+    "price": 14.00,
+    "size": "large",
+    "timestampStart": "2025-04-27",
+    "timestampEnd": "2025-04-29"
+}
+
+
+###
+
 GET http://localhost:3000/api/bags/1/fooditems

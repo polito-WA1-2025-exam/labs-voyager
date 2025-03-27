@@ -1,8 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
-import { getBusinesses, getBusiness, postBusiness, putBusiness } from './dao.mjs';
-import { getBag, getBags, getBagsOfBusiness, postBag, putBag } from './dao.mjs';
-import { getFoodItemsOfBags } from './dao.mjs';
+import { getBusinesses, getBusiness, postBusiness, putBusiness, deleteBusiness } from './dao.mjs';
+import { getBag, getBags, getBagsOfBusiness, postBag, putBag, deleteBag } from './dao.mjs';
+import { getFoodItemsOfBags, getFoodItems, postFoodItem, putFoodItem, deleteFoodItem } from './dao.mjs';
 
 const app = express();
 
@@ -61,6 +61,7 @@ app.get('/api/bags', async (req, res) => {
     .catch(err => res.status(500).end());
 });
 
+
 app.get('/api/businesses/:buId/bags', async (req, res) => {
     try {
         const bags = await getBagsOfBusiness(req.params.buId);
@@ -74,6 +75,20 @@ app.get('/api/businesses/:buId/bags', async (req, res) => {
         res.status(500).end();
     }
 });
+
+app.post('/api/businesses/:buId/bags', async (req, res) => {
+    try {
+        const newId = await postBag(req.params.buId, req.body);
+        if (newId.error){
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    }
+    catch {
+        res.status(500).end();
+    } 
+})
 
 app.get('/api/bags/:bagId', async (req, res) => {
     try {

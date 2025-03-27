@@ -172,7 +172,52 @@ export const getBagsOfBusiness = (businessId) => {
     })
 }
 
-export const postBag = () => {}
+const createFoodItem = (name, quantity, bagId) => {
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO fooditem(name, quantity, bagId) VALUES (?, ?, ?)";
+        if (name == undefined || quantity == undefined || bagId == undefined){
+            reject({error: "Data is missing"})
+        }
+        db.run(query, [name, quantity, bagId], function(err){
+            if (err)
+                reject(err);
+            else {
+                const lastId = this.lastID;
+                if (lastId == undefined)
+                    reject({error: "Fail to insert new fooditem"});
+                else
+                    resolve(lastId);
+            }  
+        })
+    })
+} 
+
+export const postBag = (buId, json) => {
+    return new Promise((resolve, reject) => {
+        const query = "INSERT INTO bag(bagType, size, price, businessFrom, timestampStart, timestampEnd, removedItemsCounter, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        if (json == undefined)
+            reject({error: "Post request body is missing"})
+        // Assumption: a new bag is always available and no food items have been removed 
+        const counter = (json.bagType == "Surprise") ? undefined : 0;
+        db.run(query, [json.bagType, json.size, json.price, buId, json.timestampStart, json.timestampEnd, counter, 1], function(err){
+            if (err)
+                reject(err);
+            else {
+                const lastId = this.lastID;
+                if (lastId == undefined)
+                    reject({error: "Fail to insert new bag"});
+                else {
+                    json.foodItems.map(async(f) => {
+                        await createFoodItem(f.name, f.quantity, lastId).catch(err => reject(err.message))
+                    })
+                    resolve(lastId);
+                }
+                    
+            }
+        })
+    })
+}
+
 export const putBag = () => {}
 export const deleteBag = () => {}
 
