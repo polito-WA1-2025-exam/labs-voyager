@@ -35,6 +35,7 @@ git add .
 - define set of food category and cuisine type (discrete variables)
 ### [ ] DAO: Add CRUD for foodItem
 ### [ ] DAO: getFoodItemsOfBag()
+### [ ] Change Business.phoneNumber from Integer to String
 
 # Exercise ```Surplus Food```
 
