@@ -29,6 +29,13 @@ git checkout lab-1-vale -- ./README.md
 git add .
 ```
 
+# Tasks
+### [ ] DAO: Add Filter Businesses by type, food category, cuisine type
+- define a type for Business (restaurant or store)
+- define set of food category and cuisine type (discrete variables)
+### [ ] DAO: Add CRUD for foodItem
+### [ ] DAO: getFoodItemsOfBag()
+
 # Exercise ```Surplus Food```
 
 # Lab Journal

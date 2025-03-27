@@ -117,5 +117,3 @@ export const getBagsOfBusiness = (businessId) => {
 
 export const postBag = () => {}
 export const putBag = () => {}
-
-// TODO: add CRUD for foodItem
