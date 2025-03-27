@@ -1,6 +1,6 @@
 import sqlite from "sqlite3";
 
-const db_name = "./db2.sqlite";
+const db_name = "database/db2.sqlite";
 const db = new sqlite.Database(db_name, (err) => { if (err) throw err; });
 
 const runQuery = (sql, message) => {
@@ -41,6 +41,7 @@ function bagTable() {
         timestampStart TEXT NOT NULL,
         timestampEnd TEXT NOT NULL,
         removedItemsCounter INTEGER,
+        isAvailable INTEGER NOT NULL,
         FOREIGN KEY(businessFrom) REFERENCES business(id))`;
 
         return runQuery(sql, "Bag Table created.");

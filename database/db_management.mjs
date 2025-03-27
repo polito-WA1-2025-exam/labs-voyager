@@ -1,6 +1,6 @@
 import sqlite from "sqlite3";
 
-const db_name = "./db.sqlite"
+const db_name = "database/db.sqlite"
 const db = new sqlite.Database(db_name, (err) => { if (err) throw err; });
 
 const sql_business_query = `CREATE TABLE IF NOT EXISTS business(

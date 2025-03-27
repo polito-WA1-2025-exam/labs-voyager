@@ -51,6 +51,7 @@ bag: foreign key from bag table
     [Sample response, with body (if any)] 
     [Error response(s), if any]
 ```
+
 ### API Endpoints 
 
 **List all businesses**
@@ -251,8 +252,6 @@ Response: `insert possible responses`
 
 Response body: *none*
 <br>
-
-
 
 TODO:
 - create a business
