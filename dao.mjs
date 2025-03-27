@@ -1,7 +1,7 @@
 /* Data Access Object (DAO) module for accessing db */
 import sqlite from 'sqlite3';
 import {Business} from './classes/business.mjs'
-import {SurpriseBag, RegularBag} from './classes/bag.mjs'
+import {SurpriseBag, RegularBag, FoodItem} from './classes/bag.mjs'
 
 const db = new sqlite.Database('./database/db2.sqlite', (err) => {if (err) throw err});
 
@@ -40,6 +40,7 @@ export const getBusiness = (id) => {
 
 export const postBusiness = () => {}
 export const putBusiness = () => {}
+export const deleteBusiness = () => {}
 
 export const getBags = () => {
     return new Promise((resolve, reject) => {
@@ -117,3 +118,27 @@ export const getBagsOfBusiness = (businessId) => {
 
 export const postBag = () => {}
 export const putBag = () => {}
+export const deleteBag = () => {}
+
+export const getFoodItems = () => {}
+export const postFoodItem = () => {}
+export const putFoodItem = () => {}
+export const deleteFoodItem = () => {}
+
+export const getFoodItemsOfBags = (bagId) => {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT * FROM fooditem WHERE bagId=?"
+        db.all(query, [bagId], (err, rows) => {
+            if (err)
+                reject(err);
+            else if (rows == undefined) {
+                resolve({error: 'Bag not present, check inserted id.'})
+            } else {
+                const fooditems = []
+                rows.map(f => fooditems.push(new FoodItem(f.name, f.quantity, f.id)));
+                resolve(fooditems);
+            }
+        })
+    })
+}
+

@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import { getBusinesses, getBusiness, postBusiness, putBusiness } from './dao.mjs';
-import { getBag, getBags, getBagsOfBusiness, postBag, putBag } from './dao.mjs';
+import { getBag, getBags, getBagsOfBusiness, postBag, putBag, getFoodItemsOfBags} from './dao.mjs';
 
 const app = express();
 
@@ -67,6 +67,18 @@ app.get('/api/bags/:bagId', async (req, res) => {
 app.post('/api/bags', (req, res) => {});
 app.put('/api/bags/:bagId', (req, res) => {});
 
-// TODO: add APIs for foodItem
+app.get('/api/bags/:bagId/fooditems', async (req, res) => {
+    try {
+        const foodItems = await getFoodItemsOfBags(req.params.bagId);
+        if (foodItems.error) {
+            res.status(404).end();
+        } else {
+            res.json(foodItems);
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).end();
+    }
+})
 
 app.listen(3000, () => console.log('Server ready at port 3000'));
