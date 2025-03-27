@@ -51,19 +51,207 @@ bag: foreign key from bag table
     [Sample response, with body (if any)] 
     [Error response(s), if any]
 ```
-### Endpoints 
+
+### API Endpoints 
+
+**List all businesses**
+
+URL: `/api/businesses`
+
+HTTP Method: GET.
+
+Description: Retrieve all the businesses.
+
+Response: `200 OK` (Success) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
+
+Response body:
 ```
-GET /                                           # entry point
-GET /home                                       # home page
-GET /home/businesses                            # show all businesses
-GET /home/businesses/:buId/business             # show a particular business
-PUT /home/businesses/:buId/business             # modify a particular business
-GET /home/businesses/:buId/bags                 # show all the available bags of a particular business
-GET /home/businesses/:buId/bags/:bagId/bag      # show details of a particular bag of a particular business
-PUT /home/businesses/:buId/bags/:bagId/bag      # modify a particular bag of a particular business
-GET /home/bags                                  # show all the available bags
-GET /home/bags/:bagId/bag                       # show details of a particular bag
-PUT /home/bags/:bagId/bag                       # show details of a particular bag
+{
+  "id": 5,
+  "name": "Burger King",
+  "address": "Via X",
+  "phone_number": 333,
+  "cuisine_type": "fast food",
+  "food_category": "meat",
+  "list_bags": []
+}
+
+``` 
+<br>
+
+**Show details of a particular business**
+
+URL: `/api/businesses/:buId/`
+
+HTTP Method: GET.
+
+Description: Retrieve the business represented by <buId>.
+
+Response: `200 OK` (Success), `404 Not Found` (business not found in the database) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
+
+Response body:
+```
+{
+  "id": 5,
+  "name": "Burger King",
+  "address": "Via X",
+  "phone_number": 333,
+  "cuisine_type": "fast food",
+  "food_category": "meat",
+  "list_bags": []
+}
+```
+<br>
+
+**Insert a new business**
+
+URL: `/api/businesses` 
+
+HTTP Method: POST.
+
+Description: Insert a new business object.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
+
+**Update an existing business**
+
+URL: `/api/businesses/:buId/ `
+
+HTTP Method: PUT.
+
+Description: Update the business represented by <buId>.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
+
+**List all bags**
+
+URL: `/api/bags`
+
+HTTP Method: GET.
+
+Description: Retrieve all the bags.
+
+Response: `200 OK` (Success) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
+
+Response body:
+```
+{
+  "bag_type": "Regular",
+  "food_items": [],
+  "price": 15.9,
+  "size": "large",
+  "business_from": 1,
+  "timestamp_start": null,
+  "timestamp_end": null,
+  "is_available": true,
+  "removedItemsCounter": 0
+}
+```
+<br>
+
+**List all bags of a specific business**
+
+URL: `/api/businesses/:buId/bags`
+
+HTTP Method: GET.
+
+Description: Retrieve all the bags.
+
+Response: `200 OK` (Success), `404 Not Found` (business not found in the database) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
+
+Response body:
+```
+{
+  "bag_type": "Regular",
+  "food_items": [],
+  "price": 15.9,
+  "size": "large",
+  "business_from": 1,
+  "timestamp_start": null,
+  "timestamp_end": null,
+  "is_available": true,
+  "removedItemsCounter": 0
+}
+```
+<br>
+
+**Show details of a particular bag**
+
+URL: `/api/bags/:bagId`
+
+HTTP Method: GET.
+
+Description: Retrieve the business represented by <buId>.
+
+Response: `200 OK` (Success), `404 Not Found` (bag not found in the database) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
+
+Response body:
+```
+{
+  "bag_type": "Regular",
+  "food_items": [],
+  "price": 15.9,
+  "size": "large",
+  "business_from": 1,
+  "timestamp_start": null,
+  "timestamp_end": null,
+  "is_available": true,
+  "removedItemsCounter": 0
+}
+```
+<br>
+
+**Insert a new bag**
+
+URL: `/api/bags` 
+
+HTTP Method: POST.
+
+Description: Insert a new business object.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
+
+**Update an existing bag**
+
+URL: `/api/bags/:bagId`
+
+HTTP Method: PUT.
+
+Description: Update the business represented by <buId>.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
 
 TODO:
 - create a business
@@ -71,10 +259,11 @@ TODO:
 - delete a business
 - delete a bag
 - remove a food item from a bag
+
+
 TODO User management:
-? Do I have a relationship between the booker (user) and the bag?
+- ? Do I have a relationship between the booker (user) and the bag?
 - manage user page
 - reserve a bag / manage shopping cart: add a bag
 - free a bag / manage shopping cart: free a bag
 - manage shopping cart: confirm cart
-```
