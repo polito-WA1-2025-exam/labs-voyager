@@ -1,7 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import { getBusinesses, getBusiness, postBusiness, putBusiness } from './dao.mjs';
-import { getBag, getBags, getBagsOfBusiness, postBag, putBag, getFoodItemsOfBags} from './dao.mjs';
+import { getBag, getBags, getBagsOfBusiness, postBag, putBag } from './dao.mjs';
+import { getFoodItemsOfBags } from './dao.mjs';
 
 const app = express();
 
@@ -28,7 +29,20 @@ app.get('/api/businesses/:buId/', async (req, res) => {
     }
 });
 
-app.post('/api/businesses', (req, res) => {});
+app.post('/api/businesses', async (req, res) => {
+    try{
+        const newId = await postBusiness(req.body);
+        if (newId.error){
+            res.status(500).end();
+        } else {
+            res.status(200).end();
+        }
+    } catch(err){
+        console.log(err.message);
+        res.status(500).end()
+    }
+});
+
 app.put('/api/businesses/:buId', (req, res) => {});
 
 app.get('/api/bags', async (req, res) => {
@@ -75,8 +89,8 @@ app.get('/api/bags/:bagId/fooditems', async (req, res) => {
         } else {
             res.json(foodItems);
         }
-    } catch (error) {
-        console.log(error.message);
+    } catch (err) {
+        console.log(err.message);
         res.status(500).end();
     }
 })

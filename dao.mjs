@@ -38,8 +38,28 @@ export const getBusiness = (id) => {
 }
 
 
-export const postBusiness = () => {}
-export const putBusiness = () => {}
+export const postBusiness = (json) => {
+    return new Promise((resolve, reject) => {
+        const query = 'INSERT INTO business(name, address, phoneNumber, cuisineType, foodCategory) VALUES (?, ?, ?, ?, ?)';
+        if (json == undefined)
+            reject({error: "Post request body is missing"})
+        db.run(query, [json.name, json.address, json.phoneNumber, json.cuisineType, json.foodCategory], function(err){
+            if (err)
+                reject(err)
+            else {
+                const newId = this.lastID;
+                if (newId == undefined)
+                    reject({error: "Fail to insert new business"});
+                else
+                    resolve(newId);
+            }
+        })
+    })
+}
+
+export const putBusiness = (buId, json) => {
+    
+}
 export const deleteBusiness = () => {}
 
 export const getBags = () => {
