@@ -27,6 +27,7 @@ export const getBusiness = (id) => {
             if (err)
                 reject(err);
             else if (row == undefined) {
+                // TODO: WHY RESOLVING AN ERROR?????
                 resolve({error: 'Business not present, check inserted id'})
             } 
             else {
