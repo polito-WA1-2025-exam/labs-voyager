@@ -1,8 +1,8 @@
 .business-card {
     position: relative;
-    border-radius: 8px;
+    border-radius: 20px;
     overflow: hidden;
-    background-color: #96e9f1;
+    background-color: #5a3f5d;
     transition: transform 0.2s;
     height: 100%;
     display: flex;
@@ -14,17 +14,20 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
   }
   
   .business-info h3 {
-    font-size: 1rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: x-large;
     margin: 0;
   }
   
   .business-info p {
     color: #999;
-    font-size: 0.9rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: medium;
+    margin: 0;
+    padding-bottom: 1%;
   }
 
   @media (max-width: 768px) {
