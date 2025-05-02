@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { getBusinesses, getBusiness, postBusiness, putBusiness, deleteBusiness } from './dao.mjs';
 import { getBag, getBags, getBagsOfBusiness, postBag, putBag, deleteBag } from './dao.mjs';
 import { getFoodItemsOfBags, getFoodItems, postFoodItem, putFoodItem, deleteFoodItem } from './dao.mjs';
@@ -8,6 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 app.get('/api/businesses', async (req, res) => {
     getBusinesses()
