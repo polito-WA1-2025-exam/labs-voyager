@@ -4,7 +4,7 @@ function Establishments(props) {
     const establishments = props.establishments;
 
     return <>
-        <p>Establishments</p>
+        <h3>Establishments</h3>
         <Table>
             <thead>
                 <tr>
