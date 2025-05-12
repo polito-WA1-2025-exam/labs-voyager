@@ -1,6 +1,6 @@
 function Footer(props) {
     return <>
-        <h1>Footer</h1>
+        <p>&copy; 2025 Voyager: Valentina Borello - Mattia Morea</p>
     </>;
 }
 
