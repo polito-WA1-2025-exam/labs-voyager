@@ -24,7 +24,7 @@ function App() {
     new Business('Cupcake Castle', 'Cherry Blvd', '011 9012345', undefined, 'Bakery', 15),
   ];
 
-  const fakeBags1 = [new SurpriseBag(
+  const fakeBags = [new SurpriseBag(
     [
       new FoodItem('Salmon Roll', 2),
       new FoodItem('Tuna Nigiri', 3),
@@ -34,7 +34,8 @@ function App() {
     5.99,
     1,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
+    "2025-05-18T12:00:00",
+    11
   ),
   new RegularBag(
     [
@@ -45,10 +46,10 @@ function App() {
     7.49,
     1,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
-  )];
-
-  const fakeBags2 = [new RegularBag(
+    "2025-05-18T12:00:00",
+    12
+  ),
+  new RegularBag(
     [
       new FoodItem('Lasagna', 1),
       new FoodItem('Bruschetta', 3),
@@ -57,7 +58,8 @@ function App() {
     6.99,
     2,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
+    "2025-05-18T12:00:00",
+    21
   ),
   new SurpriseBag(
     [
@@ -68,10 +70,10 @@ function App() {
     4.99,
     2,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
-  )];
-
-  const fakeBags8 = [new RegularBag(
+    "2025-05-18T12:00:00",
+    22
+  ),
+  new RegularBag(
     [
       new FoodItem('Chicken Tikka', 2),
       new FoodItem('Naan Bread', 2),
@@ -80,7 +82,8 @@ function App() {
     8.99,
     8,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
+    "2025-05-18T12:00:00",
+    81
   ),
   new SurpriseBag(
     [
@@ -91,10 +94,10 @@ function App() {
     5.49,
     8,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
-  )];
-
-  const fakebags9 = [new RegularBag(
+    "2025-05-18T12:00:00",
+    82
+  ),
+  new RegularBag(
     [
       new FoodItem('Cupcake', 2),
       new FoodItem('Brownie', 1),
@@ -104,7 +107,8 @@ function App() {
     6.49,
     9,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
+    "2025-05-18T12:00:00",
+    91
   ),
   new SurpriseBag(
     [
@@ -114,12 +118,14 @@ function App() {
     3.99,
     9,
     "2025-05-18T10:00:00",
-    "2025-05-18T12:00:00"
-  )];
+    "2025-05-18T12:00:00",
+    92
+  )
+  ]
 
   fakeEstablishments.sort((a, b) => (a.name > b.name));
   const [establishments, setEstablishments] = useState(fakeEstablishments);
-  const [bags, setBags] = useState(fakeBags1);  
+  const [bags, setBags] = useState(fakeBags);
 
   return (
     <>
@@ -127,7 +133,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<ListEstablishments establishments={establishments} />} />
-            <Route path="businesses/:buId" element={<Establishment establishments={establishments}/>}/>
+            <Route path="businesses/:buId" element={<Establishment establishments={establishments} bags={bags} />} />
           </Route>
         </Routes>
         <Footer />

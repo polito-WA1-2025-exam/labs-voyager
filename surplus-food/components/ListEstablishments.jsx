@@ -32,7 +32,7 @@ function ListEstablishments(props) {
                             {e.phone_number}
                         </td>
                         <td>
-                            {e.cuisine_type ? "Store" : "Restaurant"}
+                            {e.cuisine_type ? `Store (${e.cuisine_type})` :  `Restaurant (${e.food_category})`}
                         </td>
                     </tr>))}
             </tbody>
