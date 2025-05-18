@@ -1,6 +1,9 @@
 import { Table } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
-function Establishments(props) {
+function ListEstablishments(props) {
+    const navigate = useNavigate;
     const establishments = props.establishments;
 
     return <>
@@ -18,7 +21,9 @@ function Establishments(props) {
                 {establishments.map(e => (
                     <tr key={e.id}>
                         <td>
-                            {e.name}
+                            <Link to={`/businesses/${e.id}`}>
+                                {e.name}
+                            </Link>
                         </td>
                         <td>
                             {e.address}
@@ -35,4 +40,4 @@ function Establishments(props) {
     </>
 }
 
-export default Establishments;
+export default ListEstablishments;
