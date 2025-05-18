@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Establishment from '../components/Establishment';
 import ListEstablishments from '../components/ListEstablishments';
+import ShoppingCart from '../components/ShoppingCart';
 import { Business } from '../models/business.mjs';
 import { RegularBag, SurpriseBag, FoodItem } from '../models/bag.mjs';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -126,6 +127,7 @@ function App() {
   fakeEstablishments.sort((a, b) => (a.name > b.name));
   const [establishments, setEstablishments] = useState(fakeEstablishments);
   const [bags, setBags] = useState(fakeBags);
+  const [shoppingCart, setShoppingCart] = useState([]);
 
   return (
     <>
@@ -134,6 +136,7 @@ function App() {
           <Route path="/" element={<Header />}>
             <Route index element={<ListEstablishments establishments={establishments} />} />
             <Route path="businesses/:buId" element={<Establishment establishments={establishments} bags={bags} />} />
+            <Route path="shopping-cart" element={<ShoppingCart shoppingCart={shoppingCart}/>}/>
           </Route>
         </Routes>
         <Footer />
