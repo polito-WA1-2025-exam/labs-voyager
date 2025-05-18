@@ -32,7 +32,7 @@ function App() {
     ],
     'small',
     5.99,
-    fakeEstablishments.find(b => b.id === 1),
+    1,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   ),
@@ -43,7 +43,7 @@ function App() {
     ],
     'medium',
     7.49,
-    fakeEstablishments.find(b => b.id === 1),
+    1,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   )];
@@ -55,7 +55,7 @@ function App() {
     ],
     'medium',
     6.99,
-    fakeEstablishments.find(b => b.id === 2),
+    2,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   ),
@@ -66,7 +66,7 @@ function App() {
     ],
     'small',
     4.99,
-    fakeEstablishments.find(b => b.id === 2),
+    2,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   )];
@@ -78,7 +78,7 @@ function App() {
     ],
     'large',
     8.99,
-    fakeEstablishments.find(b => b.id === 8),
+    8,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   ),
@@ -89,7 +89,7 @@ function App() {
     ],
     'small',
     5.49,
-    fakeEstablishments.find(b => b.id === 8),
+    8,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   )];
@@ -102,7 +102,7 @@ function App() {
     ],
     'medium',
     6.49,
-    fakeEstablishments.find(b => b.id === 9),
+    9,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   ),
@@ -112,7 +112,7 @@ function App() {
     ],
     'small',
     3.99,
-    fakeEstablishments.find(b => b.id === 9),
+    9,
     "2025-05-18T10:00:00",
     "2025-05-18T12:00:00"
   )];
