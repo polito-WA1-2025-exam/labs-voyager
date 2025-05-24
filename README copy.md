@@ -1,23 +1,63 @@
-# Group "Voyager"
+# Group "GROUP NAME"
 
 ## Members
 - s347908 Borello Valentina
 - s346299 Morea Mattia
 
-# Exercise ```Surplus Food```
-
-## Starting the project
-
-To start the frontend, go to `/surplus-food-client` and run 
-
-``` bash
-npm run dev
+## Git guide
+### Create new branch from an existing one
+```pwsh
+git checkout -b "new-branch" "existing-branch"
+git push -u origin "new-branch"
+```
+### Create new separate branch
+```pwsh
+git branch "new-branch"
+git push -u origin "new-branch"
 ```
 
-To start the backend server, go to `/surplus-food-server` and run
+### Push one file from one branch to another
+```pwsh
+git checkout target-branch
+git checkout source-branch -- path-to-file
+git add .
+```
+#### Example: Pushing README from lab-1-vale to lab-1
+```pwsh
+git checkout lab-1
+git checkout lab-1-vale -- ./README.md
+git add .
+```
 
-``` bash
-node index.mjs 
+# Tasks
+### [ ] DAO: Add Filter Businesses by type, food category, cuisine type
+- define a type for Business (restaurant or store)
+- define set of food category and cuisine type (discrete variables)
+### [ ] DAO: Add CRUD for foodItem
+### [X] DAO: getFoodItemsOfBag()
+### [ ] Change Business.phoneNumber from Integer to String
+
+# Exercise ```Surplus Food```
+
+# Lab Journal
+## Lab **1**
+
+## Lab 2
+### bag(<u>id</u>, bag_type, size, price, business_from, timestamp_start, timestamp_end, removedItemsCounter*, isAvailable)
+business_from: foreign key of table business
+### fooditem(<u>id</u>, name, quantity, bag)
+food-item one-to-many relation with bag;     
+bag: foreign key from bag table
+### user(<u>id</u>, username, password, status)  
+### business(<u>id</u>, name, address, phone_number, cuisine_type*, food_category*)  
+
+## Lab 3
+```txt
+[HTTP Method] [URL, optionally with parameter(s)] 
+    [One-line about what this API is doing] 
+    [Sample request, with body (if any)] 
+    [Sample response, with body (if any)] 
+    [Error response(s), if any]
 ```
 
 ### API Endpoints 
@@ -33,18 +73,16 @@ Description: Retrieve all the businesses.
 Response: `200 OK` (Success) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
 
 Response body:
-``` json
-[
-  {
-    "id": 1,
-    "name": "Asahi Sushi Restaurant",
-    "address": "Sunrise Street",
-    "phone_number": "011 1234567",
-    "cuisine_type": null,
-    "food_category": "Sushi",
-    "list_bags": []
-  },
-]
+```
+{
+  "id": 5,
+  "name": "Burger King",
+  "address": "Via X",
+  "phone_number": 333,
+  "cuisine_type": "fast food",
+  "food_category": "meat",
+  "list_bags": []
+}
 
 ``` 
 <br>
@@ -60,19 +98,54 @@ Description: Retrieve the business represented by <buId>.
 Response: `200 OK` (Success), `404 Not Found` (business not found in the database) or `500 Internal Server Error` (generic error). In case of success, returns an array of businesses in JSON format; else, returns an error message.
 
 Response body:
-``` json
+```
 {
-  "id": 2,
-  "name": "Da Valentino Store",
-  "address": "Italy Street",
-  "phone_number": "011 9876543",
-  "cuisine_type": "Italian",
-  "food_category": null,
+  "id": 5,
+  "name": "Burger King",
+  "address": "Via X",
+  "phone_number": 333,
+  "cuisine_type": "fast food",
+  "food_category": "meat",
   "list_bags": []
 }
 ```
 <br>
 
+**Insert a new business**
+
+URL: `/api/businesses` 
+
+HTTP Method: POST.
+
+Description: Insert a new business object.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
+
+**Update an existing business**
+
+URL: `/api/businesses/:buId/ `
+
+HTTP Method: PUT.
+
+Description: Update the business represented by <buId>.
+
+Request body:
+```
+insert request
+```
+
+Response: `insert possible responses`
+
+Response body: *none*
+<br>
 
 **List all bags**
 
