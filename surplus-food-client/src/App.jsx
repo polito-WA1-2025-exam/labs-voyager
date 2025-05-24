@@ -32,6 +32,7 @@ function App() {
             <Route path="businesses/:buId" element={<Establishment establishments={establishments} />} />
             <Route path="shopping-cart" element={<ShoppingCart shoppingCart={shoppingCart} />} />
           </Route>
+          <Route path="*" element={<h1>404 Page Not Found</h1>} />
         </Routes>
         <Footer />
       </BrowserRouter>
