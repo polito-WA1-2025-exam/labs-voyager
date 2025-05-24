@@ -1,18 +1,20 @@
 import express from 'express';
 import morgan from 'morgan';
-import { getBusinesses, getBusiness, postBusiness, putBusiness, deleteBusiness } from './dao.mjs';
-import { getBag, getBags, getBagsOfBusiness, postBag, putBag, deleteBag } from './dao.mjs';
-import { getFoodItemsOfBags, getFoodItems, postFoodItem, putFoodItem, deleteFoodItem } from './dao.mjs';
+import cors from 'cors';
+import { getBusinesses, getBusiness } from './dao.mjs';
+import { getBag, getBags, getBagsOfBusiness, postBag } from './dao.mjs';
+import { getFoodItemsOfBags } from './dao.mjs';
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 app.get('/api/businesses', async (req, res) => {
     getBusinesses()
-    .then(businesses => res.json(businesses))
-    .catch(err => res.status(500).end());
+        .then(businesses => res.json(businesses))
+        .catch(err => res.status(500).end());
 });
 
 app.get('/api/businesses/:buId/', async (req, res) => {
@@ -30,9 +32,9 @@ app.get('/api/businesses/:buId/', async (req, res) => {
 });
 
 app.post('/api/businesses', async (req, res) => {
-    try{
+    try {
         const newId = await postBusiness(req.body);
-        if (newId.error){
+        if (newId.error) {
             res.status(500).end();
         } else {
             res.status(200).end();
@@ -43,7 +45,7 @@ app.post('/api/businesses', async (req, res) => {
 });
 
 app.put('/api/businesses/:buId', async (req, res) => {
-    try{
+    try {
         const updatedBuId = await putBusiness(req.params.buId, req.body);
         if (updatedBuId.error) {
             res.status(404).end();
@@ -57,8 +59,8 @@ app.put('/api/businesses/:buId', async (req, res) => {
 
 app.get('/api/bags', async (req, res) => {
     getBags()
-    .then(bags => res.json(bags))
-    .catch(err => res.status(500).end());
+        .then(bags => res.json(bags))
+        .catch(err => res.status(500).end());
 });
 
 
@@ -79,7 +81,7 @@ app.get('/api/businesses/:buId/bags', async (req, res) => {
 app.post('/api/businesses/:buId/bags', async (req, res) => {
     try {
         const newId = await postBag(req.params.buId, req.body);
-        if (newId.error){
+        if (newId.error) {
             res.status(500).end();
         } else {
             res.status(200).end();
@@ -87,7 +89,7 @@ app.post('/api/businesses/:buId/bags', async (req, res) => {
     }
     catch {
         res.status(500).end();
-    } 
+    }
 })
 
 app.get('/api/bags/:bagId', async (req, res) => {
@@ -103,8 +105,8 @@ app.get('/api/bags/:bagId', async (req, res) => {
         res.status(500).end();
     }
 });
-app.post('/api/bags', (req, res) => {});
-app.put('/api/bags/:bagId', (req, res) => {});
+app.post('/api/bags', (req, res) => { });
+app.put('/api/bags/:bagId', (req, res) => { });
 
 app.get('/api/bags/:bagId/fooditems', async (req, res) => {
     try {

@@ -3,7 +3,7 @@ import sqlite from 'sqlite3';
 import {Business} from './classes/business.mjs'
 import {SurpriseBag, RegularBag, FoodItem} from './classes/bag.mjs'
 
-const db = new sqlite.Database('./database/db2.sqlite', (err) => {if (err) throw err});
+const db = new sqlite.Database('./database/db.sqlite', (err) => {if (err) throw err});
 
 export const getBusinesses = () => {
     return new Promise((resolve, reject) => {
@@ -27,7 +27,6 @@ export const getBusiness = (id) => {
             if (err)
                 reject(err);
             else if (row == undefined) {
-                // TODO: WHY RESOLVING AN ERROR?????
                 resolve({error: 'Business not present, check inserted id'})
             } 
             else {
@@ -38,66 +37,6 @@ export const getBusiness = (id) => {
     })
 }
 
-
-export const postBusiness = (json) => {
-    return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO business(name, address, phoneNumber, cuisineType, foodCategory) VALUES (?, ?, ?, ?, ?)';
-        if (json == undefined)
-            reject({error: "Post request body is missing"})
-        db.run(query, [json.name, json.address, json.phoneNumber, json.cuisineType, json.foodCategory], function(err){
-            if (err)
-                reject(err)
-            else {
-                const newId = this.lastID;
-                if (newId == undefined)
-                    reject({error: "Fail to insert new business"});
-                else
-                    resolve(newId);
-            }
-        })
-    })
-}
-
-export const findRecord = (id, table) => {
-    return new Promise((resolve, reject) => {
-        const query = `SELECT * from ${table} WHERE id=?`;
-        if (id == undefined)
-            reject({error: "id is undefined"});
-        db.get(query, [id], (err, row) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(row !== undefined);
-            }
-        });
-    })
-}
-
-export const putBusiness = (buId, json) => {
-
-    return new Promise( async (resolve, reject) => {
-
-        const query = "UPDATE business SET name=?, address=?, phoneNumber=?, cuisineType=?, foodCategory=? WHERE business.id=?";
-        if (json == undefined)
-            reject({error: "Put request body is missing"});
-        if (await findRecord(buId, "business") == false)
-            reject({error: "Business not present, check inserted id."})
-        
-        db.run(query, [json.name, json.address, json.phoneNumber, json.cuisineType, json.foodCategory, buId], function(err){
-            if (err)
-                reject(err)
-            else {
-                const newId = this.lastID;
-                if (newId == undefined)
-                    reject({error: "Fail to update business"});
-                else
-                    resolve(newId);
-            }
-        })
-    })
-}
-
-export const deleteBusiness = () => {}
 
 export const getBags = () => {
     return new Promise((resolve, reject) => {
@@ -162,9 +101,9 @@ export const getBagsOfBusiness = (businessId) => {
                 const bags = [];
                 rows.map(b => {
                     if (b.bagType === 'Surprise') {
-                        bags.push(new SurpriseBag([], b.size, b.price, b.businessFrom, b.timestampStart, b.timestampEnd));
+                        bags.push(new SurpriseBag([], b.size, b.price, b.businessFrom, b.timestampStart, b.timestampEnd, b.id));
                     } else {
-                        bags.push(new RegularBag([], b.size, b.price, b.businessFrom, b.timestampStart, b.timestampEnd));
+                        bags.push(new RegularBag([], b.size, b.price, b.businessFrom, b.timestampStart, b.timestampEnd, b.id));
                     }
                 });
                 resolve(bags);

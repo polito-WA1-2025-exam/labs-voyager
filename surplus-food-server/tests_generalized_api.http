@@ -1,10 +1,12 @@
-
-GET http://localhost:3000/api/bags
-
 ###
-
 GET http://localhost:3000/api/businesses
-
 ###
-
+GET http://localhost:3000/api/businesses/1/
+###
+GET http://localhost:3000/api/businesses/1/bags
+###
+GET http://localhost:3000/api/businesses/200/
+###
 GET http://localhost:3000/api/fooditems
+###
+GET http://localhost:3000/api/bags/:bagId/fooditems
